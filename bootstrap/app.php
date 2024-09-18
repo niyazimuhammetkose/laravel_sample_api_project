@@ -18,6 +18,13 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
+            'abilities' => \Laravel\Sanctum\Http\Middleware\CheckAbilities::class,
+            'ability' => \Laravel\Sanctum\Http\Middleware\CheckForAnyAbility::class,
+        ]);
+
+        $middleware->validateCsrfTokens(except: [
+            'stripe/*',
+            'http://localhost/*',
         ]);
 
         //
