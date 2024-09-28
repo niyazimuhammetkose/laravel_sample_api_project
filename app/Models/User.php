@@ -88,16 +88,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return new Attribute(
             get: fn() => !is_null($this->two_factor_confirmed_at),
-//            get: fn() => !is_null($this->two_factor_secret),
         );
-    }
-
-    /**
-     * Prepare a date for array / JSON serialization.
-     */
-    protected function serializeDate(DateTimeInterface $date): string
-    {
-        return $date->format('d/m/Y H:i:s');
     }
 
     public function toSearchableArray(): array
