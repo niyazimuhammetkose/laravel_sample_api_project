@@ -7,5 +7,6 @@ Route::prefix('users')->name('users.')->group(function () {
 
     Route::get('/', [UsersController::class, 'index'])->name('index')
         ->middleware(['throttle:api_list_users']);
+    Route::get('/search', [UsersController::class, 'search'])->name('search');
 
 });

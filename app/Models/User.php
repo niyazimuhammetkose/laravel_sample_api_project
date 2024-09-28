@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Elastic\ScoutDriverPlus\Searchable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Traits\SoftDeleteAttributes;
 use DateTimeInterface;
@@ -25,7 +26,7 @@ use OpenApi\Attributes as OA;
 )]
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, SoftDeletes, SoftDeleteAttributes, HasApiTokens, TwoFactorAuthenticatable;
+    use HasFactory, Notifiable, SoftDeletes, SoftDeleteAttributes, HasApiTokens, TwoFactorAuthenticatable, Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -97,6 +98,14 @@ class User extends Authenticatable implements MustVerifyEmail
     protected function serializeDate(DateTimeInterface $date): string
     {
         return $date->format('d/m/Y H:i:s');
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'name' => $this->name,
+            'email' => $this->email,
+        ];
     }
 
     public function OAuthProviders(): HasMany
